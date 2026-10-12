@@ -105,6 +105,7 @@
     "63b35f281745dd52341e5da7", // F1 Shrapnel
     "5996f6fc86f7745e585b4de3", // M67 Shrapnel
     "67654a6759116d347b0bfb86", // V40 Shrapnel
-    "66ec2aa6daf127599c0c31f1" // O-832DU Shrapnel
+    "66ec2aa6daf127599c0c31f1", // O-832DU Shrapnel
+    "67ade494d748873e5f0161df" // VOG-30 Shrapnel (added in 4.1; not in the original 3.11 list)
   ]
 }
