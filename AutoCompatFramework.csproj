@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>AutoCompatFramework</AssemblyName>
+    <RootNamespace>AutoCompatFramework</RootNamespace>
+    <Version>1.3.2</Version>
+    <!-- 서버 모드 배치 경로. 이 폴더가 있으면 빌드 후 자동 복사한다(없으면 생략). -->
+    <SptModsDir Condition="'$(SptModsDir)' == ''">E:\SPT 4.1\SPT_Runtime\user\mods</SptModsDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SPTushonka.Common" Version="4.1.6" />
+    <PackageReference Include="SPTushonka.DI" Version="4.1.6" />
+    <PackageReference Include="SPTushonka.Reflection" Version="4.1.6" />
+    <PackageReference Include="SPTushonka.Server.Core" Version="4.1.6" />
+  </ItemGroup>
+
+  <!-- 실행 때 읽는 파일들. 출력 폴더에 config\, data\ 하위 폴더 구조 그대로 들어간다. -->
+  <ItemGroup>
+    <None Include="config\config.jsonc" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="data\vanillaItems.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="data\logMessages.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!-- 빌드 한 번에: Build\SPT_Runtime\user\mods\AutoCompatFramework\ 를 게임 폴더 구조로 채우고 release\AutoCompatFramework-<버전>.zip 생성 -->
+  <Target Name="PackageMod" AfterTargets="Build">
+    <PropertyGroup>
+      <PackDir>$(MSBuildProjectDirectory)\Build\SPT_Runtime\user\mods\AutoCompatFramework</PackDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <PackConfig Include="$(OutDir)config\*" />
+      <PackData Include="$(OutDir)data\*" />
+    </ItemGroup>
+    <RemoveDir Directories="$(MSBuildProjectDirectory)\Build" />
+    <!-- 하위 폴더는 폴더 단위로 따로 복사한다(**\ 글롭은 첫 폴더 이름을 날려 납작해진다) -->
+    <Copy SourceFiles="$(OutDir)AutoCompatFramework.dll" DestinationFolder="$(PackDir)" />
+    <Copy SourceFiles="@(PackConfig)" DestinationFolder="$(PackDir)\config" />
+    <Copy SourceFiles="@(PackData)" DestinationFolder="$(PackDir)\data" />
+    <MakeDir Directories="$(MSBuildProjectDirectory)\release" />
+    <ZipDirectory SourceDirectory="$(MSBuildProjectDirectory)\Build" DestinationFile="$(MSBuildProjectDirectory)\release\AutoCompatFramework-$(Version).zip" Overwrite="true" />
+  </Target>
+
+  <!-- 게임 폴더가 있는 PC 에서만 mods 폴더로 바로 복사 (컨테이너에서는 생략) -->
+  <Target Name="DeployToSptMods" AfterTargets="PackageMod" Condition="Exists('$(SptModsDir)')">
+    <ItemGroup>
+      <DeployFiles Include="$(MSBuildProjectDirectory)\Build\SPT_Runtime\user\mods\AutoCompatFramework\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SptModsDir)\AutoCompatFramework\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+</Project>
