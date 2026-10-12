@@ -2,10 +2,10 @@
 
 ### ⚠️ IMPORTANT NOTICE / DISCLAIMER
 
-**Original Author:** Solid-Rhoads
-**Original Repository:** AutoCompat-Framework
-**Original Link:** https://github.com/Solid-Rhoads/AutoCompat-Framework
-**License:** MIT (Copyright (c) 2025 Solid-Rhoads — see `LICENSE`)
+- **Original Author:** Solid-Rhoads
+- **Original Repository:** AutoCompat-Framework
+- **Original Link:** https://github.com/Solid-Rhoads/AutoCompat-Framework
+- **License:** MIT (Copyright (c) 2025 Solid-Rhoads — see `LICENSE`)
 
 1. **Reflection & Take-Downs:** I deeply reflect on the ECOT incident. As an AI-assisted "vibe coder," I will immediately delete files if the original authors ask.
 2. **No Re-Distribution:** These ported builds are unverified, temporary fixes. Please do NOT re-upload or share them anywhere else.
@@ -17,6 +17,7 @@
 
 ## 변경 이력
 
+- 2026-10-13 04:36 — README 맨 위 원작자 표기를 한 줄씩 나눠 보기 쉽게 정리 (내용 변화 없음)
 - 2026-10-12 21:55 — SPT 4.1 서버(C#)용으로 처음 포팅. 원작은 3.11 TypeScript 모드라 4.1에서 못 돌아서, 같은 계산을 C#으로 다시 썼습니다. 4.1에서 바뀐 바닐라 아이템 29개가 "모드 아이템"으로 잘못 분류되지 않게 바닐라 ID 목록(`data/vanillaItems.json`)도 4.1.6 기준으로 새로 뽑았고, 4.1에서 새로 생긴 파편 탄(`shrapnel_vog30`)을 기본 블랙리스트에 추가했습니다.
 
 ## 이 모드가 하는 일
